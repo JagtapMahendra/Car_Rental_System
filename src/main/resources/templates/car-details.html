@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('/uploads/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .left-section {
+            flex: 1;
+            min-width: 350px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .left-section img {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+            object-fit: contain;
+        }
+
+        .right-section {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            padding: 15px;
+        }
+
+        h2 {
+            color: #ff9800;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .car-info p {
+            font-size: 1rem;
+            color: #ddd;
+            margin: 5px 0;
+            font-weight: 500;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg, #ff9800, #ff5722);
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+            text-transform: uppercase;
+            box-shadow: 0px 5px 10px rgba(255, 87, 34, 0.3);
+        }
+
+        .btn-custom:hover {
+            background: #ff5722;
+            transform: scale(1.05);
+            box-shadow: 0px 7px 15px rgba(255, 87, 34, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .left-section img {
+                max-width: 100%;
+            }
+        }
+
+        /* Footer Styling - Updated to match home page */
+        .footer {
+            background: linear-gradient(135deg, #1a1a1a, #333);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .footer h5 {
+            color: #ff9800;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .footer p, .footer a {
+            color: #ddd;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div th:replace="~{common-navbar}"></div>
+
+    <div class="container">
+        <div class="left-section">
+            <img th:if="${car.imagePath != null}" th:src="@{'/uploads/' + ${car.imagePath}}" alt="Car Image">
+            <img th:unless="${car.imagePath != null}" src="/uploads/default-car.jpg" alt="Default Car Image">
+        </div>
+
+        <div class="right-section">
+            <h2 th:text="${car.brand} + ' ' + ${car.model}"></h2>
+            <div class="car-info">
+                <p><strong>Price Per Day:</strong> ₹<span th:text="${car.pricePerDay}"></span></p>
+                <p><strong>Seater Capacity:</strong> <span th:text="${car.seater}"></span></p>
+                <p><strong>Fuel Type:</strong> <span th:text="${car.fuelType}"></span></p>
+                <p><strong>Transmission:</strong> <span th:text="${car.transmissionType}"></span></p>
+                <p><strong>Type:</strong> <span th:text="${car.acType}"></span></p>
+                <p><strong>Car Number:</strong> <span th:text="${car.carNumber}"></span></p>
+                <p><strong>Contact for more Details:</strong> <span th:text="${admin != null ? admin.phoneNumber : 'N/A'}"></span></p>
+            </div>
+            <a th:href="@{/booking/book(carId=${car.id}, userId=${user.id})}" class="btn btn-custom">Book Now</a>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h5>About Us</h5>
+                <p>We provide reliable and affordable car rental services for your travel needs.</p>
+            </div>
+            <div>
+                <h5>Quick Links</h5>
+                <p><a href="#">Home</a> | <a href="#">Cars</a> | <a href="#">Contact</a></p>
+            </div>
+            <div>
+                <h5>Contact Us</h5>
+                <p>Email: Jagtap@carrental.com</p>
+                <p>Phone: +91 9623269416</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

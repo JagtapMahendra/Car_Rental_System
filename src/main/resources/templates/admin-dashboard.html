@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('/images/Admin-Dashboard.avif') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f8b400;
+        }
+
+        /* Dashboard Styling */
+        .dashboard-container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        /* Admin Action Cards */
+        .admin-actions {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white; /* Changed card background to white */
+            padding: 30px;
+            border-radius: 15px;
+            width: 300px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.2); /* Adjusted shadow for better contrast */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: black; /* Ensuring text is visible on white background */
+        }
+
+        /* Update hover effect to match new background */
+        .card:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3); /* Adjusted shadow */
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .card p {
+            font-size: 16px;
+        }
+
+        .btn {
+            background: #f8b400;
+            color: black;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: black;
+            color: #f8b400;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar with Logo -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/images/jagtap logo.jpg" alt="Car Rental Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="/admin/add-car">Add Car</a></li>
+            <li><a href="/admin/car-list">Car List</a></li>
+            <li><a href="/admin/bookings">Customer Bookings</a></li>
+            <li><a href="/admin/login">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dashboard Welcome Section -->
+    <div class="dashboard-container">
+        <h1>Welcome, <span th:text="${admin.fullName}"></span>!</h1>
+
+        <!-- Admin Actions -->
+        <div class="admin-actions">
+            <div class="card">
+                <h2>Add New Car</h2>
+                <p>Manage your fleet by adding new cars.</p>
+                <a th:href="@{/admin/add-car}" class="btn">Go</a>
+            </div>
+            <div class="card">
+                <h2>View Car List</h2>
+                <p>Check the list of available rental cars.</p>
+                <a th:href="@{/admin/car-list}" class="btn">Go</a>
+            </div>
+            <div class="card">
+                <h2>Customer Bookings</h2>
+                <p>Check the list of Customer Bookings.</p>
+                <a th:href="@{/admin/bookings}" class="btn">Go</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

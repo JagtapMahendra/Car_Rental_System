@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Car</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background: #1e1e2f;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .update-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #2a2a3a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-control, .form-select {
+            background: #3b3b4f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #ff8c00;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #e67e00;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: #6c757d;
+            border: none;
+        }
+
+        .img-preview {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="update-container">
+            <h2 class="text-center mb-4">Update Car</h2>
+            
+            <div th:if="${error}" class="alert alert-danger">
+                <p th:text="${error}"></p>
+            </div>
+            
+            <form th:action="@{/admin/update-car}" th:object="${car}" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="mb-3">
+                    <label for="brand" class="form-label">Brand:</label>
+                    <input type="text" id="brand" th:field="*{brand}" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="model" class="form-label">Model:</label>
+                    <input type="text" id="model" th:field="*{model}" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="seater" class="form-label">Seater Capacity:</label>
+                    <input type="number" id="seater" th:field="*{seater}" class="form-control" min="1" max="15" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="fuelType" class="form-label">Fuel Type:</label>
+                    <select id="fuelType" th:field="*{fuelType}" class="form-select" required>
+                        <option value="">Select Fuel Type</option>
+                        <option value="PETROL">Petrol</option>
+                        <option value="DIESEL">Diesel</option>
+                        <option value="ELECTRIC">Electric</option>
+                        <option value="CNG">CNG</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="transmissionType" class="form-label">Transmission Type:</label>
+                    <select id="transmissionType" th:field="*{transmissionType}" class="form-select" required>
+                        <option value="">Select Transmission Type</option>
+                        <option value="MANUAL">Manual</option>
+                        <option value="AUTOMATIC">Automatic</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="pricePerDay" class="form-label">Price Per Day:</label>
+                    <input type="number" id="pricePerDay" th:field="*{pricePerDay}" class="form-control" step="0.01" required>
+                </div>
+                
+                <div class="mb-3 form-check">
+                    <input type="checkbox" id="availability" th:field="*{availability}" class="form-check-input">
+                    <label for="availability" class="form-check-label">Available</label>
+                </div>
+                
+                <div class="mb-3">
+                    <label>Current Car Image:</label>
+                    <div th:if="${car.imagePath}">
+                        <img th:src="@{'/uploads/' + ${car.imagePath}}" alt="Car Image" class="img-preview">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="carImage" class="form-label">Upload New Image:</label>
+                    <input type="file" id="carImage" name="carImage" class="form-control" accept="image/*">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Update Car</button>
+                <a href="/admin/dashboard" class="btn btn-secondary mt-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

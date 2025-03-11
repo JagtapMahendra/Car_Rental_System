@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Navbar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Navbar Styling */
+        .navbar {
+            padding: 15px 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand img {
+            height: 40px; /* Adjust as needed */
+            width: auto;
+            margin-right: 10px;
+            border-radius: 5px; /* Optional for rounded edges */
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8c146 !important;
+        }
+
+        .nav-item {
+            margin-left: 15px;
+        }
+
+        /* Active Link Styling */
+        .navbar-nav .nav-link.active {
+            color: #f8c146 !important;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Common Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/user/home}">
+            <img src="/images/jagtap logo.jpg" alt="Car Rental Logo">
+            Car Rental
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/user/home}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/user/bookings(userId=${user.id})}">My Bookings</a></li>
+                <li class="nav-item"><a class="nav-link text-danger" th:href="@{/user/login}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Bootstrap Script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

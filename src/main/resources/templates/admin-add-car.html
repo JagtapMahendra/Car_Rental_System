@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Car</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Fullscreen Background */
+        body {
+            background: url('/images/AddNewCar.avif') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: auto;
+        }
+
+        /* Background Overlay */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: -1;
+        }
+
+        /* Form Container */
+        .form-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Form Styling */
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            width: 100%;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            color: black;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            background: #ff7eb3;
+            color: white;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 18px;
+            transition: 0.3s;
+            border: none;
+            width: 100%;
+        }
+
+        .btn-custom:hover {
+            background: #ff4f81;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+            transition: 0.3s;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.4);
+            color: black;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+            .btn-custom, .btn-secondary {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Add New Car</h2>
+
+        <!-- Success/Error Messages -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <form th:action="@{/admin/add-car}" th:object="${car}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <input type="text" class="form-control" name="brand" id="brand" placeholder="Brand" th:field="*{brand}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Model</label>
+                <input type="text" class="form-control" name="model" id="model" placeholder="Model" th:field="*{model}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pricePerDay">Price Per Day</label>
+                <input type="number" class="form-control" name="pricePerDay" id="pricePerDay" placeholder="Price Per Day" th:field="*{pricePerDay}" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="carNumber">Car Number</label>
+                <input type="text" class="form-control" name="carNumber" id="carNumber" placeholder="Car Number" th:field="*{carNumber}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="acType">AC Type</label>
+                <select class="form-control" name="acType" id="acType" th:field="*{acType}" required>
+                    <option value="" disabled selected>Select AC Type</option>
+                    <option value="AC">AC</option>
+                    <option value="NON_AC">Non-AC</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="seater">Seater</label>
+                <input type="number" class="form-control" name="seater" id="seater" placeholder="Seater" th:field="*{seater}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fuelType">Fuel Type</label>
+                <select class="form-control" name="fuelType" id="fuelType" th:field="*{fuelType}" required>
+                    <option value="" disabled selected>Select Fuel Type</option>
+                    <option value="PETROL">Petrol</option>
+                    <option value="DIESEL">Diesel</option>
+                    <option value="ELECTRIC">Electric</option>
+                    <option value="CNG">CNG</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="transmissionType">Transmission Type</label>
+                <select class="form-control" name="transmissionType" id="transmissionType" th:field="*{transmissionType}" required>
+                    <option value="" disabled selected>Select Transmission Type</option>
+                    <option value="MANUAL">Manual</option>
+                    <option value="AUTOMATIC">Automatic</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="carImage">Car Image</label>
+                <input type="file" class="form-control" name="carImage" id="carImage" accept="image/*" required>
+            </div>
+
+            <button type="submit" class="btn btn-custom">Add Car</button>
+            <a href="/admin/dashboard" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
